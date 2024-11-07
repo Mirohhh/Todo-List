@@ -17,6 +17,8 @@ div#root {
 h1 {
     font-size: 52px;
     color: #ddd;
+    margin: 0px;
+    align-self: center;
 }
 
 section {
@@ -79,7 +81,14 @@ button#add-btn:hover {
     background-color: rgb(234, 229, 194);
 }
 
-div#task-div {
+div#tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: 0.1s ease-in-out;
+}
+
+div.task-div {
     padding: 2%;
     background-color: cornflowerblue;
     border-radius: 4px;
@@ -112,6 +121,7 @@ span#done-spn {
     background-color: transparent;
     border: none;
     font-size: 32px;
+    font-weight: bold;
 }
 
 button#rmv-btn {
