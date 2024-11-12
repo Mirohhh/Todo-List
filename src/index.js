@@ -6,48 +6,45 @@ let tasksComplete = [];
 const taskInput = document.getElementById("task-inpt");
 const addBtn = document.getElementById("add-btn");
 const task = document.getElementById("tasks");
-const taskDiv = document.querySelectorAll(".task-div")
-const rmvBtn = document.querySelectorAll("#rmv-btn");
-const h3 = document.querySelector("h3");
+const h3 = document.getElementById("tsks");
+const ch3 = document.getElementById("ctsks");
+var txt = document.createTextNode("\u2713");
 
 addBtn.addEventListener("click", () => {
     addTask(taskInput.value);
     updateH3();
 });
 
-task.addEventListener("click", () => {
+task.addEventListener("click", (e) => {
     for (const child of task.children) {
-        child.addEventListener("click", (e) => {
             let target = e.target;
             if (target.id === "rmv-btn") {
                 myTasks.splice(target.parentElement.id, 1);
                 target.parentElement.remove();
-            } else if (target.id === "taskbtn-div") {
-                if (!tasksComplete.includes(child)) {
-                    target.style.backgroundColor = "#ddd";
-                    target.firstChild.textContent = "v";
-                    tasksComplete.push(child);
-                } else {
-                    target.style.backgroundColor = "#fffdfd";
-                    target.firstChild.textContent = "";
+                if (tasksComplete.includes(child)) {
                     tasksComplete.splice(tasksComplete.indexOf(child), 1);
                 }
+            } else if (target.id === "taskbtn-div" && JSON.stringify(target.parentElement) === JSON.stringify(child)) {
+                if (!tasksComplete.includes(child)) {
+                    tasksComplete.push(child);
+                    target.style.backgroundColor = "#ddd";
+                    target.firstChild.appendChild(txt);
+                    target.lastChild.style.textDecoration = "line-through";
+                    console.log("Already exists");
+                } else {
+                    target.style.backgroundColor = "#fffdfd";
+                    target.firstChild.innerHTML = "";
+                    target.lastChild.style.textDecoration = "none";
+                    tasksComplete.splice(tasksComplete.indexOf(child), 1);
+                    console.log("Added");
+                }
             }
-        });
     }
     console.log(myTasks);
+    console.log(tasksComplete);
     updateH3();
+    updateCH3()
 });
-
-for (let i = 0; i < task.length; i++) {
-    task[i].addEventListener("click", (e) => {
-        const target = e.target;
-        if (target.id == "rmv-btn") {
-            myTasks.splice(target.parentElement.id, 1);
-            target.parentElement.remove();
-        }
-    });
-}
 
 
 function addTask(tsk) {
@@ -82,4 +79,8 @@ function createTask(tsk) {
 
 function updateH3() {
     h3.textContent = `Tasks: ${myTasks.length}`;
+}
+
+function updateCH3() {
+    ch3.textContent = `Completed Tasks: ${tasksComplete.length}`;
 }

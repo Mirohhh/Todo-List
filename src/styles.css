@@ -137,3 +137,8 @@ button#rmv-btn {
 button#rmv-btn:hover {
     background-color: rgb(234, 229, 194);
 }
+
+div#info {
+    display: flex;
+    justify-content: space-evenly;
+}
